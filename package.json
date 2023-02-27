@@ -1,0 +1,24 @@
+{
+  "name": "nrc-tjtoolkit-nodes",
+  "version": "0.0.1",
+  "description": "Node-RED contributed (NRC) toolkit nodes.",
+  "author": "Thorben Jändling (https://github.com/ThorbenJ/nrc-tjtoolkit-nodes)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThorbenJ/nrc-tjtoolkit-nodes.git"
+  },
+  "keywords": [
+    "node-red",
+    "elasticsearch"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+  },
+  "bugs": {
+    "url": "https://github.com/ThorbenJ/nrc-tjtoolkit-nodes/issues"
+  },
+  "homepage": "https://github.com/ThorbenJ/nrc-tjtoolkit-nodes#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
