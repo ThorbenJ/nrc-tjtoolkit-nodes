@@ -7,7 +7,7 @@ When creating flows, or other technology specific nodes, I sometimes find an una
 ## Nodes
 
  - dedot - Mustache does not support key names with dots "." in them. This will will dedot all keys in msg, converting them to tilda ('.' -> '~')
- - contextConf - These is a node dedicated to setting context vairables, with various accessibility features (such as mustache templates)
+ - contextConf - A node dedicated to setting context vairables, with various accessibility features (such as mustache templates)
    Note: You already can set context values via `change` and `function` nodes.
 
 
