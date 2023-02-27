@@ -1,0 +1,85 @@
+<script type="text/markdown" data-help-name="contextConfig">
+Configure context values via flows at startup or on message
+
+### Inputs
+
+Values read in via the mustache templates (see options, below) if applicable
+
+### Outputs
+
+None
+
+### Options
+
+TBD
+
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('contextConfig',{
+        category: 'function',
+        defaults: {
+            name: {value: ''},
+            mode: {value: 'startup'},
+            scope: {value: 'flow'},
+            content: {value: ''},
+            loadContexts: {value: ""}
+        },
+        color:'#C0C0C0',
+        paletteLabel: "context config",
+        inputs:1,
+        outputs:0,
+        icon: 'font-awesome/fa-gavel',
+        label: function() {
+            return this.name || this.paletteLabel;
+        },
+        oneditprepare: function(){
+            this.content_editor = RED.editor.createEditor({
+                id: 'node-input-content-editor',
+                mode: 'ace/mode/yaml',
+                value: $("#node-input-content").val()
+            });
+        },
+        oneditsave: function() {
+            $("#node-input-content").val(this.content_editor.getValue());
+            this.content_editor.destroy();
+            delete this.content_editor;
+        },
+        oneditcancel: function() {
+            this.content_editor.destroy();
+            delete this.content_editor;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="contextConfig">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-pencil"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-arrows-alt"></i> Credential</label>
+        <select id="node-input-mode">
+            <option value="startup">On Startup</option>
+            <option value="msg">On Message</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-scope"><i class="fa fa-th-large"></i> Credential</label>
+        <select id="node-input-scope">
+            <option value="flow">Flow</option>
+            <option value="global">Global</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-content"><i class="fa fa-pencil-square-o"></i> Content</label>
+        <span style="float: right">YAML/JSON</span>
+        <input id="node-input-content" type="hidden" >
+        <div id="node-input-content-editor" class="node-text-editor" style="height: 600px; min-height:200px;"></div>
+    </div>
+    <div class="form-row">
+        <label for="node-input-loadContexts"><i class="fa fa-briefcase"></i> Contexts</label>
+        <input type="text" id="node-input-loadContexts" placeholder="comma, separated, list" />
+    </div>
+</script>
+
