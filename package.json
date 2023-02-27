@@ -1,6 +1,6 @@
 {
   "name": "nrc-tjtoolkit-nodes",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Node-RED contributed (NRC) toolkit nodes.",
   "author": "Thorben Jändling (https://github.com/ThorbenJ/nrc-tjtoolkit-nodes)",
   "repository": {
@@ -14,11 +14,14 @@
     "node-red": {
         "version": ">=3.0.0",
         "nodes": {
-            "dedot": "dedot.js"
+            "dedot": "dedot.js",
+            "context-config": "contextConfig.js"
         }
     },
   "license": "Apache-2.0",
   "dependencies": {
+        "mustache": ">=4.2.0",
+        "yaml": ">2.2.0"
   },
   "bugs": {
     "url": "https://github.com/ThorbenJ/nrc-tjtoolkit-nodes/issues"
