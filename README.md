@@ -1,4 +1,4 @@
-# nrc-elasticsearch-storage
+# nrc-tjtoolkit-nodes
 
 A [Node-RED](http://www.nodered.org) contributed (NRC) module with extra/toolkit nodes.
 
