@@ -15,16 +15,25 @@ Options marked {M} accept mustache templates to read values from the input messa
 
 : Name (string) : This node instance's name
 : Mode (select) : Set context per msg or once at startup
-: Scope (select) : Set context in flow or global scope
+: Scope (select) : Set context in node(*), flow or global scope
 : Content (string/object) : {m} The conext vars to set, will try to parse YAML (& therefore JSON)
 : loadContexts (string) : Comma separated list of context keys to load
+
+(*) Scope: Node => The top keys in the YAML will be used as a node id. e.g.:
+```
+abc0123456789def:
+  name1: value1
+  name2: {{payload}}
+```
+Node IDs can be found by opening the "Information" tab (on the right in Node-Red)
+and clicking on a node.
 
 Using `{{ }}` will escape via JSON.stringify, allowing you to pass objects and arrays.
 Using `{{{ }}}` will pass the scalar value
 
 If in startup mode there will be no data for mustache templates, unless you load values from other contexts.
 
-If loadContexts is set, mustache templates will have access to `_` (hash).
+If loadContexts is set, mustache templates will have access to `_` (underscore as hash).
 Its keys will be those listed in loadContexts, and values will be fetched from context stores.
 Values are fetch in this order: node, flow, global; with the first found being returned.
 This `_` does not become part of msg, and you wont have access to `_` in msg from mustache.
@@ -68,7 +77,7 @@ This `_` does not become part of msg, and you wont have access to `_` in msg fro
     });
 </script>
 
-<script type="text/x-red" data-template-name="contextConfig">
+<script type="text/html" data-template-name="contextConfig">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-pencil"></i> Name</label>
         <input type="text" id="node-input-name">
@@ -83,6 +92,7 @@ This `_` does not become part of msg, and you wont have access to `_` in msg fro
     <div class="form-row">
         <label for="node-input-scope"><i class="fa fa-arrows-alt"></i> Scope</label>
         <select id="node-input-scope">
+            <option value="node">Node</option>
             <option value="flow">Flow</option>
             <option value="global">Global</option>
         </select>
