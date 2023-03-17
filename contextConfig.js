@@ -35,10 +35,10 @@ module.exports = function(RED) {
 
             var data = U.prepData(node, msg)
 
-            data = M.render(n.content, data)
+            var values = M.render(n.content, data)
 
             try {
-                data = Y.parse(data)
+                values = Y.parse(values)
             } catch(e) {
                 node.error(e)
                 return
@@ -46,18 +46,19 @@ module.exports = function(RED) {
 
             switch (n.scope) {
                 case "node":
-                    for (var nid in data){
-                        const tn = RED.nodes.getNode(nid)
+                    var nid_list = M.render(n.nodes, data).replaceAll('"','').split(",")
+                    for (var nid in nid_list){
+                        const tn = RED.nodes.getNode(nid_list[nid])
                         if (! tn) {
-                            node.error(`Node id ${nid} not found`)
+                            node.error(`Node id ${nid_list[nid]} not found (perhaps disabled?)`)
                             continue
                         }
-                        _setMutliCtx(tn.context(), data[nid])
+                        _setMutliCtx(tn.context(), values)
                     }
                     break;
                 case "flow":
                 case "globl":
-                    _setMutliCtx((node.context())[n.scope], data)
+                    _setMutliCtx((node.context())[n.scope], values)
                     break;
                 default:
                     node.error(`Invlid scope: ${n.scope}`)

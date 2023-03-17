@@ -15,16 +15,11 @@ Options marked {M} accept mustache templates to read values from the input messa
 
 : Name (string) : This node instance's name
 : Mode (select) : Set context per msg or once at startup
-: Scope (select) : Set context in node(*), flow or global scope
+: Scope (select) : Set context in node, flow or global scope
+: Nodes (string) : {m} Comma separated list of node IDs (only if scope=node)
 : Content (string/object) : {m} The conext vars to set, will try to parse YAML (& therefore JSON)
 : loadContexts (string) : Comma separated list of context keys to load
 
-(*) Scope: Node => The top keys in the YAML will be used as a node id. e.g.:
-```
-abc0123456789def:
-  name1: value1
-  name2: {{payload}}
-```
 Node IDs can be found by opening the "Information" tab (on the right in Node-Red)
 and clicking on a node.
 
@@ -47,6 +42,7 @@ This `_` does not become part of msg, and you wont have access to `_` in msg fro
             name: {value: ''},
             mode: {value: 'startup'},
             scope: {value: 'flow'},
+            nodes: {value: ''},
             content: {value: ''},
             loadContexts: {value: ""}
         },
@@ -64,6 +60,14 @@ This `_` does not become part of msg, and you wont have access to `_` in msg fro
                 mode: 'ace/mode/yaml',
                 value: $("#node-input-content").val()
             });
+            
+            $("#node-input-scope").on("change", function() {
+                if (this.value === "node") {
+                    $("#box-nodes").show();
+                } else {
+                    $("#box-nodes").hide();
+                } 
+            }).trigger("change");
         },
         oneditsave: function() {
             $("#node-input-content").val(this.content_editor.getValue());
@@ -79,7 +83,7 @@ This `_` does not become part of msg, and you wont have access to `_` in msg fro
 
 <script type="text/html" data-template-name="contextConfig">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-pencil"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
@@ -97,11 +101,15 @@ This `_` does not become part of msg, and you wont have access to `_` in msg fro
             <option value="global">Global</option>
         </select>
     </div>
+    <div class="form-row" id="box-nodes">
+        <label for="node-input-nodes"><i class="fa fa-bookmark"></i> Nodes</label>
+        <input type="text" id="node-input-nodes" placeholder="Comma separated list of Node IDs">
+    </div>
     <div class="form-row">
         <label for="node-input-content"><i class="fa fa-pencil-square-o"></i> Content</label>
         <span style="float: right">YAML/JSON</span>
         <input id="node-input-content" type="hidden" >
-        <div id="node-input-content-editor" class="node-text-editor" style="height: 600px; min-height:200px;"></div>
+        <div id="node-input-content-editor" class="node-text-editor" style="height: 300px; min-height:150px;"></div>
     </div>
     <div class="form-row">
         <label for="node-input-loadContexts"><i class="fa fa-briefcase"></i> Contexts</label>
