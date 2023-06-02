@@ -42,7 +42,7 @@ module.exports = {
         var data = {...msg};
 
         if (node.conf.loadContexts) {
-            data._ = {};
+            data._ = { "_": msg._ };
             const c = node.context();
             var lc = node.conf.loadContexts.split(',');
             for (var i in lc) {

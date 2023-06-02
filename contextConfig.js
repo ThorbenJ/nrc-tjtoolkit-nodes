@@ -3,6 +3,7 @@ module.exports = function(RED) {
     const U = require("./utils");
     const Y = require("yaml");
     const M = require("mustache");
+    M.escape = function (t) { return JSON.stringify(t) };
 
     function ContextConfig(n) {
         RED.nodes.createNode(this,n);
